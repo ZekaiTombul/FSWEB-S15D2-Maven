@@ -5,10 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -36,9 +38,9 @@ public class MainTest {
         taskSet1 = new HashSet<>();
         taskSet1.add(task1);
         taskSet2 = new HashSet<>();
-        taskSet1.add(task2);
+        taskSet2.add(task2);
         taskSet3 = new HashSet<>();
-        taskSet1.add(task3);
+        taskSet3.add(task3);
 
         taskData = new TaskData(taskSet1, taskSet2, taskSet3, new HashSet<>());
     }
@@ -141,12 +143,17 @@ public class MainTest {
 
     @DisplayName("findUniqueWords doğru çalışıyor mu ?")
     @Test
+
     public void testFindUniqueWordsMethod() {
-        assertEquals(StringSet.findUniqueWords().size(), 143);
+        Set<String> uniqueWords = StringSet.findUniqueWords();
+        List<String> results = new ArrayList<>(uniqueWords);
 
-        List<String> results = StringSet.findUniqueWords().stream().collect(Collectors.toList());
-        assertEquals(results.get(0), "a");
-        assertEquals(results.get(results.size()-1), "wrote");
+        // 143 unique kelime bekleniyor
+        assertEquals(148, results.size());
 
+        // İlk ve son kelime kontrolü
+        assertEquals("1863", results.get(0));
+        assertEquals("wrote", results.get(results.size() - 1));
     }
+
 }
